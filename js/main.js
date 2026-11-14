@@ -241,7 +241,19 @@
       io.unobserve(el);
     });
   }, { threshold: 0.15, rootMargin: "0px 0px -60px 0px" });
-  const observeAll = () => $$("[data-reveal], .split-words, [data-count], .process, .g-step").forEach(el => io.observe(el));
+  /* clip-path reveals: an element clipped to nothing never "intersects", so watch its parent instead */
+  const clipIO = new IntersectionObserver(entries => entries.forEach(e => {
+    if (!e.isIntersecting) return;
+    (e.target._clipKids || []).forEach(k => k.classList.add("in"));
+    clipIO.unobserve(e.target);
+  }), { threshold: 0.05 });
+  const observeAll = () => $$("[data-reveal], .split-words, [data-count], .process, .g-step").forEach(el => {
+    const r = el.dataset.reveal;
+    if ((r === "clip" || r === "clip-x") && el.parentElement) {
+      const p = el.parentElement; p._clipKids = p._clipKids || [];
+      if (!p._clipKids.includes(el)) { p._clipKids.push(el); clipIO.observe(p); }
+    } else io.observe(el);
+  });
   observeAll();
 
   function countUp(el) {

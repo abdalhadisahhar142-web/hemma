@@ -647,7 +647,7 @@ body::after {
 .hero__title { white-space: nowrap; }
 .cta .lead { margin-inline: auto; }
 img.art.photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 1.2s var(--ease); }
-.pkg__media, .dest, .visual-card, .card--feature, .modal__media, .ziy-art, .hero__frame { position: relative; }
+.pkg__media, .dest, .visual-card, .card--feature, .modal__media, .ziy-art { position: relative; }
 .pkg__media::after, .dest::after, .visual-card::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(0deg, rgba(8,8,10,.55), transparent 55%); }
 .dest .dest__body, .dest .dest__go, .visual-card .visual-card__tag, .pkg__media .pkg__tag, .pkg__media .pkg__dur { z-index: 2; }
 .pkg:hover .pkg__media img.photo, .dest:hover img.photo, .visual-card:hover img.photo { transform: scale(1.07); }
@@ -659,3 +659,12 @@ img.art.photo { position: absolute; inset: 0; width: 100%; height: 100%; object-
 @media (max-width: 900px) { .leader { grid-template-columns: 1fr; } }
 .nav a { padding: 8px 12px; font-size: 14.5px; }
 @media (max-width: 1240px) { .nav { display: none; } .burger { display: block; } .header__cta .btn { display: none; } }
+
+/* about visual: framed photo + floating second photo */
+.stack-visual { position: relative; padding: 0 0 48px 48px; }
+.stack-visual::before { content: ""; position: absolute; top: 40px; right: -18px; bottom: 18px; left: 70px; border: 1px solid var(--line-2); border-radius: var(--radius-lg); pointer-events: none; }
+.stack-visual > .visual-card:not(.small) { box-shadow: 0 40px 90px -40px #000; }
+.stack-visual .visual-card.small { width: 46%; left: 0; bottom: 0; border: 6px solid var(--bg); border-radius: 26px; box-shadow: 0 30px 70px -25px #000; animation: float 7s ease-in-out infinite; z-index: 3; }
+@media (max-width: 900px) { .stack-visual { padding: 0 0 40px 24px; } }
+.stack-visual > .visual-card:not(.small) .visual-card__tag { left: 50%; }
+@media (max-width: 640px) { .stack-visual > .visual-card:not(.small) .visual-card__tag { left: 20px; bottom: auto; top: 20px; } }
